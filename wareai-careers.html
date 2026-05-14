@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WareAI — Únete al Equipo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2e;
+    --deep: #0a1420;
+    --cyan: #00c8e0;
+    --cyan-dim: #00a8be;
+    --blue-mid: #1a5f8a;
+    --blue-light: #2a7fb5;
+    --surface: #111f30;
+    --surface2: #162840;
+    --border: rgba(0,200,224,0.15);
+    --text: #e8f4f8;
+    --text-muted: #7a9bb5;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(10,20,32,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo img { height: 40px; filter: drop-shadow(0 0 8px rgba(0,200,224,0.4)); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+  .nav-cta {
+    background: transparent; border: 1px solid var(--cyan);
+    color: var(--cyan); padding: 8px 20px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer;
+    transition: all 0.2s; text-decoration: none; letter-spacing: 0.06em;
+  }
+  .nav-cta:hover { background: var(--cyan); color: var(--deep); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,200,224,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: 10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(26,95,138,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,200,224,0.08); border: 1px solid var(--border);
+    color: var(--cyan); padding: 6px 16px; border-radius: 20px;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 32px; width: fit-content;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 800; line-height: 1.05;
+    color: var(--white);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 span { color: var(--cyan); }
+  .hero p {
+    max-width: 560px; margin-top: 24px;
+    font-size: 18px; line-height: 1.7; color: var(--text-muted); font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 52px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--white); }
+  .stat-num span { color: var(--cyan); }
+  .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--text-muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--cyan), transparent); animation: scrollAnim 1.5s infinite; }
+  @keyframes scrollAnim { 0% { opacity:0; transform: scaleY(0); transform-origin: top; } 50% { opacity:1; transform: scaleY(1); } 100% { opacity:0; } }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ── FILTER BAR ── */
+  .filter-section {
+    padding: 0 60px 40px;
+    background: var(--deep);
+  }
+  .filter-bar {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 20px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .filter-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 8px; }
+  .filter-btn {
+    background: transparent; border: 1px solid rgba(0,200,224,0.2);
+    color: var(--text-muted); padding: 7px 18px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .filter-btn.active { background: var(--cyan); border-color: var(--cyan); color: var(--deep); font-weight: 500; }
+  .filter-count {
+    margin-left: auto; font-size: 13px; color: var(--text-muted);
+  }
+  .filter-count span { color: var(--cyan); font-weight: 600; }
+
+  /* ── JOBS GRID ── */
+  .jobs-section {
+    padding: 0 60px 100px;
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 36px;
+  }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); }
+  .section-sub { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+
+  .jobs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 20px;
+  }
+
+  /* JOB CARD */
+  .job-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .job-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .job-card:hover { transform: translateY(-4px); border-color: rgba(0,200,224,0.35); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 30px rgba(0,200,224,0.06); }
+  .job-card:hover::before { opacity: 1; }
+
+  .job-card.featured {
+    border-color: rgba(0,200,224,0.3);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(0,200,224,0.04) 100%);
+  }
+  .featured-badge {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(0,200,224,0.12); border: 1px solid rgba(0,200,224,0.3);
+    color: var(--cyan); padding: 4px 10px; border-radius: 10px;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .job-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+    position: relative;
+  }
+  .icon-tech { background: rgba(0,200,224,0.1); border: 1px solid rgba(0,200,224,0.2); }
+  .icon-sales { background: rgba(42,127,181,0.15); border: 1px solid rgba(42,127,181,0.25); }
+  .icon-support { background: rgba(0,180,140,0.1); border: 1px solid rgba(0,180,140,0.2); }
+  .icon-admin { background: rgba(180,120,0,0.1); border: 1px solid rgba(180,120,0,0.2); }
+
+  .job-dept {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+  .job-title {
+    font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+    color: var(--white); line-height: 1.25; margin-bottom: 12px;
+  }
+  .job-desc {
+    font-size: 14px; line-height: 1.65; color: var(--text-muted);
+    margin-bottom: 20px; font-weight: 300;
+  }
+  .job-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .tag {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted); padding: 4px 12px; border-radius: 20px;
+    font-size: 12px;
+  }
+  .job-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .job-meta { display: flex; gap: 16px; }
+  .meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+  .meta-icon { font-size: 14px; }
+  .apply-btn {
+    background: transparent; border: 1px solid var(--cyan);
+    color: var(--cyan); padding: 9px 22px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .apply-btn:hover { background: var(--cyan); color: var(--deep); }
+  .apply-btn svg { transition: transform 0.2s; }
+  .apply-btn:hover svg { transform: translateX(3px); }
+
+  .vacancies-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-muted);
+  }
+  .vacancy-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,12,22,0.85); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 20px; padding: 48px; max-width: 640px; width: 90%;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(20px) scale(0.97); transition: transform 0.3s;
+    position: relative;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(255,255,255,0.06); border: none; color: var(--text-muted);
+    width: 32px; height: 32px; border-radius: 8px;
+    cursor: pointer; font-size: 18px; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+  .modal-dept { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--cyan); margin-bottom: 10px; }
+  .modal-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--white); margin-bottom: 20px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .modal-section p, .modal-section li { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
+  .modal-section ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .modal-section li::before { content: '→ '; color: var(--cyan); }
+  .modal-form { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+  .form-input, .form-textarea {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text); padding: 12px 16px; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    transition: border-color 0.2s; outline: none; resize: vertical;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--cyan); }
+  .form-textarea { min-height: 100px; }
+  .file-upload {
+    border: 1px dashed rgba(0,200,224,0.25); border-radius: 8px;
+    padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s;
+    background: rgba(0,200,224,0.02);
+  }
+  .file-upload:hover { border-color: var(--cyan); background: rgba(0,200,224,0.05); }
+  .file-upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .file-upload-text { font-size: 13px; color: var(--text-muted); }
+  .file-upload-text span { color: var(--cyan); }
+  .submit-btn {
+    background: var(--cyan); border: none; color: var(--deep);
+    padding: 14px 32px; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em;
+  }
+  .submit-btn:hover { background: #00e5ff; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,200,224,0.25); }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    margin: 0 60px 80px; padding: 60px;
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(0,200,224,0.06) 100%);
+    border: 1px solid var(--border); border-radius: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::after {
+    content: ''; position: absolute; right: -80px; top: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,200,224,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-text h2 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+  .cta-text p { font-size: 15px; color: var(--text-muted); font-weight: 300; }
+  .cta-btn {
+    background: var(--cyan); border: none; color: var(--deep);
+    padding: 14px 36px; border-radius: 10px; white-space: nowrap;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block;
+  }
+  .cta-btn:hover { background: #00e5ff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,200,224,0.3); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 60px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text-muted); font-size: 13px;
+  }
+  footer img { height: 28px; opacity: 0.6; }
+
+  /* ── GRID OVERLAY ── */
+  .grid-overlay {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: linear-gradient(rgba(0,200,224,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,200,224,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── HIDDEN ── */
+  .job-card.hidden { display: none; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--deep); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,200,224,0.2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="/mnt/user-data/uploads/1778743638839_image.png" alt="WareAI" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <span style="display:none; font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:var(--white)">Ware<span style="color:var(--cyan)">AI</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#">Inicio</a>
+    <a href="#">Producto</a>
+    <a href="#">Empresa</a>
+    <a href="#" class="active">Empleo</a>
+  </div>
+  <a class="nav-cta" href="#">Solicitar Demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Estamos contratando</div>
+  <h1>Construye el futuro<br>de la <span>logística inteligente</span></h1>
+  <p>Buscamos personas con talento, ambición y ganas de impactar. Únete a WareAI y trabaja en soluciones de IA y automatización que transforman sectores enteros.</p>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">10<span>+</span></div>
+      <div class="stat-label">Vacantes abiertas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Departamentos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Equipo comprometido</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Ver vacantes
+  </div>
+</section>
+
+<!-- FILTER -->
+<section class="filter-section">
+  <div class="filter-bar">
+    <span class="filter-label">Filtrar por</span>
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="tech">Tecnología</button>
+    <button class="filter-btn" data-filter="sales">Ventas</button>
+    <button class="filter-btn" data-filter="support">Atención al Cliente</button>
+    <button class="filter-btn" data-filter="admin">Administración</button>
+    <span class="filter-count"><span id="count">10</span> vacantes encontradas</span>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section class="jobs-section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Posiciones abiertas</div>
+      <div class="section-sub">Málaga, España · Modalidad híbrida</div>
+    </div>
+  </div>
+
+  <div class="jobs-grid" id="jobsGrid">
+
+    <!-- TECH x4 -->
+    <div class="job-card featured" data-dept="tech" onclick="openModal('ing1')">
+      <div class="featured-badge">Destacado</div>
+      <div class="job-icon icon-tech">⚙️</div>
+      <div class="job-dept">Ingeniería · Tecnología</div>
+      <div class="job-title">Ingeniero/a de Software Full-Stack</div>
+      <div class="job-desc">Desarrolla nuevas funcionalidades, optimiza la interfaz de usuario y mantiene la arquitectura de nuestra plataforma SaaS logística.</div>
+      <div class="job-tags">
+        <span class="tag">React / Node.js</span>
+        <span class="tag">Metodologías Ágiles</span>
+        <span class="tag">REST APIs</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>2 plazas</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <div class="job-card" data-dept="tech" onclick="openModal('ing2')">
+      <div class="job-icon icon-tech">🗄️</div>
+      <div class="job-dept">Ingeniería · Backend</div>
+      <div class="job-title">Ingeniero/a de Bases de Datos</div>
+      <div class="job-desc">Gestiona y optimiza la capa de datos de nuestra plataforma, garantizando rendimiento, seguridad e integridad de la información.</div>
+      <div class="job-tags">
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">Query Optimization</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>1 plaza</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <div class="job-card" data-dept="tech" onclick="openModal('ing3')">
+      <div class="job-icon icon-tech">🤖</div>
+      <div class="job-dept">Ingeniería · IA</div>
+      <div class="job-title">Ingeniero/a de Inteligencia Artificial</div>
+      <div class="job-desc">Investiga e implementa mejoras en los modelos de IA que impulsan la automatización logística de WareAI.</div>
+      <div class="job-tags">
+        <span class="tag">Python / ML</span>
+        <span class="tag">LLMs</span>
+        <span class="tag">Data Pipelines</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>1 plaza</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <!-- SALES x2 -->
+    <div class="job-card" data-dept="sales" onclick="openModal('sales1')">
+      <div class="job-icon icon-sales">💼</div>
+      <div class="job-dept">Comercial · Ventas</div>
+      <div class="job-title">Ejecutivo/a de Cuentas B2B</div>
+      <div class="job-desc">Capta nuevos clientes empresariales, gestiona relaciones comerciales estratégicas y genera oportunidades de negocio para WareAI.</div>
+      <div class="job-tags">
+        <span class="tag">Ventas B2B</span>
+        <span class="tag">CRM</span>
+        <span class="tag">Negociación</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>2 plazas</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <!-- SUPPORT x1 -->
+    <div class="job-card" data-dept="support" onclick="openModal('sup1')">
+      <div class="job-icon icon-support">🎧</div>
+      <div class="job-dept">Soporte · Atención al Cliente</div>
+      <div class="job-title">Técnico/a de Atención al Cliente</div>
+      <div class="job-desc">Resuelve incidencias, gestiona consultas de usuarios y apoya la instalación y onboarding del software en clientes sin perfil técnico.</div>
+      <div class="job-tags">
+        <span class="tag">Helpdesk</span>
+        <span class="tag">Instalación Software</span>
+        <span class="tag">Comunicación</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>1 plaza</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <!-- ADMIN x2 -->
+    <div class="job-card" data-dept="admin" onclick="openModal('fin1')">
+      <div class="job-icon icon-admin">📊</div>
+      <div class="job-dept">Administración · Finanzas</div>
+      <div class="job-title">Responsable de Finanzas</div>
+      <div class="job-desc">Gestiona los recursos económicos de la empresa, controla ingresos y gastos, y elabora informes que faciliten la toma de decisiones.</div>
+      <div class="job-tags">
+        <span class="tag">Contabilidad</span>
+        <span class="tag">Reporting</span>
+        <span class="tag">Análisis Financiero</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>1 plaza</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <div class="job-card" data-dept="admin" onclick="openModal('rrhh1')">
+      <div class="job-icon icon-admin">👥</div>
+      <div class="job-dept">Administración · RRHH</div>
+      <div class="job-title">Responsable de Recursos Humanos</div>
+      <div class="job-desc">Organiza el personal, lidera los procesos de selección y garantiza un excelente clima laboral dentro del equipo WareAI.</div>
+      <div class="job-tags">
+        <span class="tag">Selección de Personal</span>
+        <span class="tag">Cultura de Empresa</span>
+        <span class="tag">Nóminas</span>
+      </div>
+      <div class="job-footer">
+        <div class="job-meta">
+          <div class="meta-item"><span class="meta-icon">📍</span>Málaga</div>
+          <div class="vacancies-badge"><span class="vacancy-dot"></span>1 plaza</div>
+        </div>
+        <button class="apply-btn">Aplicar <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-text">
+    <h2>¿No encuentras tu puesto?</h2>
+    <p>Envíanos tu candidatura espontánea. Siempre buscamos talento excepcional.</p>
+  </div>
+  <a class="cta-btn" href="#" onclick="openModal('spontaneous'); return false;">Candidatura Espontánea</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <img src="/mnt/user-data/uploads/1778743638839_image.png" alt="WareAI" onerror="this.style.display='none'">
+  <span>© 2025 WareAI · Logística Inteligente | IA y Automatización · Málaga, España</span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const jobs = {
+  ing1: {
+    dept: 'Ingeniería · Tecnología',
+    title: 'Ingeniero/a de Software Full-Stack',
+    desc: 'Forma parte del núcleo técnico de WareAI y desarrolla la plataforma que automatiza la logística de cientos de empresas.',
+    functions: [
+      'Implementar nuevas funcionalidades en frontend (React) y backend (Node.js)',
+      'Optimización de la interfaz de usuario y experiencia de cliente',
+      'Colaborar en la arquitectura de microservicios de la plataforma',
+      'Participar en code reviews y estándares de calidad'
+    ],
+    profile: [
+      'Grado en Ingeniería Informática o equivalente',
+      'Experiencia en desarrollo bajo metodologías ágiles (Scrum/Kanban)',
+      'Conocimientos sólidos en React, Node.js y REST APIs',
+      'Orientación al trabajo en equipo y responsabilidad en entregas'
+    ],
+    selection: 'Prueba técnica + Entrevista de idoneidad',
+    vacancies: 2
+  },
+  ing2: {
+    dept: 'Ingeniería · Backend',
+    title: 'Ingeniero/a de Bases de Datos',
+    desc: 'Gestiona la capa de datos crítica de nuestra plataforma, garantizando rendimiento y fiabilidad en entornos de alta carga.',
+    functions: [
+      'Gestión y mantenimiento de bases de datos (PostgreSQL / MongoDB)',
+      'Optimización de queries y diseño de esquemas eficientes',
+      'Implementación de backups, replicación y estrategias de alta disponibilidad',
+      'Monitorización y resolución de incidencias en producción'
+    ],
+    profile: [
+      'Grado en Ingeniería Informática o equivalente',
+      'Experiencia con bases de datos relacionales y NoSQL',
+      'Conocimientos de administración de sistemas Linux',
+      'Capacidad analítica y atención al detalle'
+    ],
+    selection: 'Prueba técnica + Entrevista de idoneidad',
+    vacancies: 1
+  },
+  ing3: {
+    dept: 'Ingeniería · IA',
+    title: 'Ingeniero/a de Inteligencia Artificial',
+    desc: 'Investiga y aplica las últimas técnicas de IA para mejorar los algoritmos de automatización logística de WareAI.',
+    functions: [
+      'Investigación y aplicación de mejoras en modelos de Machine Learning',
+      'Diseño e implementación de pipelines de datos para entrenamiento de modelos',
+      'Integración de modelos de IA en la plataforma productiva',
+      'Evaluación de rendimiento y mejora continua de los sistemas'
+    ],
+    profile: [
+      'Grado en Ingeniería Informática, Matemáticas o Data Science',
+      'Experiencia con Python, TensorFlow/PyTorch o frameworks similares',
+      'Conocimientos en LLMs, NLP o computer vision valorados',
+      'Proactividad e iniciativa en investigación aplicada'
+    ],
+    selection: 'Prueba técnica + Entrevista de idoneidad',
+    vacancies: 1
+  },
+  sales1: {
+    dept: 'Comercial · Ventas',
+    title: 'Ejecutivo/a de Cuentas B2B',
+    desc: 'Lidera la expansión comercial de WareAI captando nuevos clientes empresariales y construyendo relaciones duraderas.',
+    functions: [
+      'Captación de clientes empresariales en sectores logísticos y de distribución',
+      'Establecimiento y mantenimiento de relaciones comerciales estratégicas',
+      'Presentación de demos y propuestas de valor adaptadas al cliente',
+      'Gestión del pipeline en CRM y reporte de resultados'
+    ],
+    profile: [
+      'Habilidades de comunicación y persuasión excepcionales',
+      'Red de contactos en sectores logísticos valorada positivamente',
+      'Orientación a resultados y actitud proactiva',
+      'Experiencia en venta consultiva B2B preferible'
+    ],
+    selection: 'Entrevista personal (competencias comerciales y actitud)',
+    vacancies: 2
+  },
+  sup1: {
+    dept: 'Soporte · Atención al Cliente',
+    title: 'Técnico/a de Atención al Cliente',
+    desc: 'Sé la voz de WareAI ante nuestros clientes, resolviendo dudas e incidencias con empatía y eficiencia.',
+    functions: [
+      'Resolución de incidencias técnicas de primer nivel',
+      'Gestión de consultas de usuarios a través de múltiples canales',
+      'Detección y reporte de errores o fallos del sistema al equipo técnico',
+      'Apoyo en la instalación y onboarding del software en clientes'
+    ],
+    profile: [
+      'Formación básica en informática o sistemas',
+      'Paciencia, empatía y excelente capacidad de comunicación',
+      'Orientación al cliente y actitud resolutiva',
+      'Conocimientos de instalación y configuración de software'
+    ],
+    selection: 'Entrevista personal + Prueba de conocimientos generales',
+    vacancies: 1
+  },
+  fin1: {
+    dept: 'Administración · Finanzas',
+    title: 'Responsable de Finanzas',
+    desc: 'Garantiza la salud financiera de WareAI gestionando recursos, analizando datos económicos y apoyando la toma de decisiones estratégicas.',
+    functions: [
+      'Control y gestión de ingresos, gastos y tesorería',
+      'Elaboración de informes financieros periódicos para dirección',
+      'Gestión de obligaciones fiscales y contables',
+      'Análisis de rentabilidad y apoyo en decisiones de inversión'
+    ],
+    profile: [
+      'Grado en ADE, Economía o Finanzas',
+      'Capacidad analítica, responsabilidad y organización',
+      'Confidencialidad y rigor en el manejo de datos económicos',
+      'Conocimientos de herramientas contables y Excel avanzado'
+    ],
+    selection: 'Prueba de conocimiento específica en finanzas y contabilidad',
+    vacancies: 1
+  },
+  rrhh1: {
+    dept: 'Administración · RRHH',
+    title: 'Responsable de Recursos Humanos',
+    desc: 'Construye y cuida el mejor equipo de WareAI, liderando selección, cultura y bienestar del personal.',
+    functions: [
+      'Gestión de procesos de selección y onboarding de nuevos empleados',
+      'Mantenimiento de un buen clima laboral y cultura de empresa',
+      'Administración de nóminas, contratos y obligaciones laborales',
+      'Elaboración de informes de personal para dirección'
+    ],
+    profile: [
+      'Grado en Relaciones Laborales, Psicología o ADE con especialización RRHH',
+      'Organización, empatía y capacidad de comunicación',
+      'Confidencialidad en el manejo de datos de personal',
+      'Experiencia en selección de perfiles técnicos valorada'
+    ],
+    selection: 'Prueba de conocimiento específica en RRHH y legislación laboral',
+    vacancies: 1
+  },
+  spontaneous: {
+    dept: 'Candidatura Espontánea',
+    title: '¿Tienes talento? Queremos conocerte',
+    desc: 'Si no has encontrado una vacante que encaje exactamente con tu perfil pero te apasiona la logística inteligente y la IA, envíanos tu candidatura espontánea.',
+    functions: [],
+    profile: [
+      'Pasión por la tecnología y la innovación',
+      'Actitud proactiva y ganas de crecer',
+      'Compromiso con los resultados del equipo',
+      'Cualquier perfil con algo especial que aportar'
+    ],
+    selection: 'Entrevista exploratoria con RRHH',
+    vacancies: null
+  }
+};
+
+function openModal(id) {
+  const job = jobs[id];
+  if (!job) return;
+  const vacanciasText = job.vacancies ? `<span style="color:var(--cyan); font-weight:600">${job.vacancies} plaza${job.vacancies > 1 ? 's' : ''} disponible${job.vacancies > 1 ? 's' : ''}</span>` : '';
+  const functionsHtml = job.functions.length ? `
+    <div class="modal-section">
+      <h3>Funciones principales</h3>
+      <ul>${job.functions.map(f => `<li>${f}</li>`).join('')}</ul>
+    </div>` : '';
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-dept">${job.dept}</div>
+    <div class="modal-title">${job.title}</div>
+    ${vacanciasText ? `<p style="font-size:13px; color:var(--text-muted); margin-bottom:20px">${vacanciasText} · Málaga, España · Jornada completa</p>` : ''}
+    <div class="modal-section">
+      <h3>Sobre el puesto</h3>
+      <p>${job.desc}</p>
+    </div>
+    ${functionsHtml}
+    <div class="modal-section">
+      <h3>Perfil requerido</h3>
+      <ul>${job.profile.map(p => `<li>${p}</li>`).join('')}</ul>
+    </div>
+    <div class="modal-section">
+      <h3>Proceso de selección</h3>
+      <p>${job.selection}</p>
+    </div>
+    <hr style="border:none; border-top:1px solid var(--border); margin:28px 0">
+    <div class="modal-section">
+      <h3>Envía tu candidatura</h3>
+    </div>
+    <div class="modal-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input class="form-input" type="text" placeholder="Tu nombre completo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="tu@email.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Teléfono</label>
+          <input class="form-input" type="tel" placeholder="+34 600 000 000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">LinkedIn (opcional)</label>
+          <input class="form-input" type="url" placeholder="linkedin.com/in/tu-perfil">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Carta de motivación</label>
+        <textarea class="form-textarea" placeholder="¿Por qué WareAI? ¿Qué puedes aportar?"></textarea>
+      </div>
+      <div class="file-upload" onclick="document.getElementById('cvInput').click()">
+        <input id="cvInput" type="file" accept=".pdf,.doc,.docx" style="display:none" onchange="updateFileName(this)">
+        <div class="file-upload-icon">📄</div>
+        <div class="file-upload-text" id="fileText">Arrastra tu CV o <span>haz clic para seleccionar</span><br><span style="font-size:11px; color:rgba(122,155,181,0.6)">PDF, DOC · máx. 5 MB</span></div>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">Enviar Candidatura →</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateFileName(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('fileText').innerHTML = `<span style="color:var(--cyan)">✓ ${input.files[0].name}</span>`;
+  }
+}
+
+function submitForm() {
+  document.getElementById('modalContent').innerHTML = `
+    <div style="text-align:center; padding:40px 0">
+      <div style="font-size:56px; margin-bottom:20px">✅</div>
+      <div class="modal-title" style="font-size:24px">¡Candidatura enviada!</div>
+      <p style="font-size:15px; color:var(--text-muted); margin-top:12px; line-height:1.7">
+        Hemos recibido tu solicitud. Nuestro equipo de RRHH la revisará<br>
+        y se pondrá en contacto contigo en los próximos días.
+      </p>
+      <button class="submit-btn" style="margin-top:32px" onclick="closeModal()">Cerrar</button>
+    </div>
+  `;
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    const cards = document.querySelectorAll('.job-card');
+    let count = 0;
+    cards.forEach(card => {
+      const match = filter === 'all' || card.dataset.dept === filter;
+      card.classList.toggle('hidden', !match);
+      if (match) count++;
+    });
+    document.getElementById('count').textContent = count;
+  });
+});
+
+// ESC to close
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
